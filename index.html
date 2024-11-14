@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta de Mensagens</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Roleta de Mensagens</h1>
+        <input type="text" id="messageInput" placeholder="Digite sua mensagem">
+        <button onclick="addMessage()">Adicionar Mensagem</button>
+        <button onclick="spin()">Girar Roleta</button>
+        <div id="roulette">
+            <div id="rouletteResult"></div>
+        </div>
+        <div id="resultDisplay" style="display: none;">Resultado: <span id="resultText"></span></div>
+        <button id="removeResultBtn" onclick="removeResult()" style="display: none;">Remover Resultado</button>
+    </div>
+
+    <!-- Container de notificações -->
+    <div id="notificationsContainer"></div>
+
+    <script src="script.js"></script>
+    <footer style="position: fixed; bottom: 0; width: 100%; text-align: center; background-color: #121212; color: #ccc; padding: 10px;">
+        <p>Desenvolvido com ❤️ por <a href="https://github.com/akiradv" target="_blank">AkiraDev</a></p>
+    </footer>
+</body>
+</html>
