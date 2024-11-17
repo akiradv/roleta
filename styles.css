@@ -35,29 +35,10 @@ button:hover {
     background-color: #555;
 }
 
-#roulette {
+#resultDisplay {
     margin-top: 20px;
-    width: 200px;
-    height: 200px;
-    border: 5px solid #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #333;
-    position: relative;
-    overflow: hidden;
-}
-
-.slice {
-    position: absolute;
-    width: 100px;
-    height: 200px;
-    transform-origin: bottom center;
-    text-align: center;
-    line-height: 200px;
+    font-size: 18px;
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .notification {
@@ -120,10 +101,4 @@ button:hover {
 @keyframes rise {
     0% { transform: translateY(100vh) rotate(0deg); }
     100% { transform: translateY(0) rotate(360deg); }
-}
-
-#resultDisplay {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #fff;
 }

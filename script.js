@@ -1,4 +1,5 @@
 let messages = [];
+let wheel;
 
 function showNotification(message, type) {
     const notification = document.createElement('div');
@@ -34,24 +35,29 @@ function addMessage() {
             messages.push(message);
             messageInput.value = '';
             showNotification('Mensagem adicionada!', 'success');
-            updateRoulette();
+            updateWheel();
         }
     } else {
         showNotification('Por favor, insira uma mensagem.', 'error');
     }
 }
 
-function updateRoulette() {
-    const roulette = document.getElementById('roulette');
-    roulette.innerHTML = ''; // Limpa as fatias existentes
-    const angleStep = 360 / messages.length;
+function updateWheel() {
+    const segments = messages.map((message, index) => ({
+        fillStyle: ['#e74c3c', '#2ecc71', '#3498db'][index % 3],
+        text: message
+    }));
 
-    messages.forEach((message, index) => {
-        const slice = document.createElement('div');
-        slice.className = 'slice';
-        slice.style.transform = `rotate(${index * angleStep}deg) translateY(-50%)`;
-        slice.textContent = message;
-        roulette.appendChild(slice);
+    wheel = new Winwheel({
+        canvasId: 'canvas',
+        numSegments: segments.length,
+        segments: segments,
+        animation: {
+            type: 'spinToStop',
+            duration: 5,
+            spins: 8,
+            callbackFinished: displayResult
+        }
     });
 }
 
@@ -61,20 +67,15 @@ function spin() {
         return;
     }
 
-    const roulette = document.getElementById('roulette');
-    const randomDegree = Math.floor(Math.random() * 360) + 360 * 3; // Gira pelo menos 3 voltas completas
-    roulette.style.transition = 'transform 2s ease-out';
-    roulette.style.transform = `rotate(${randomDegree}deg)`;
+    wheel.startAnimation();
+}
 
-    setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * messages.length);
-        const result = messages[randomIndex];
-        document.getElementById('resultText').innerText = result;
-        document.getElementById('resultDisplay').style.display = 'block';
-        showNotification('Roleta girada!', 'success');
-        showConfetti();
-        document.getElementById('removeResultBtn').style.display = 'block'; // Mostra o botão de remover resultado
-    }, 2000);
+function displayResult(indicatedSegment) {
+    document.getElementById('resultText').innerText = indicatedSegment.text;
+    document.getElementById('resultDisplay').style.display = 'block';
+    showNotification('Roleta girada!', 'success');
+    showConfetti();
+    document.getElementById('removeResultBtn').style.display = 'block';
 }
 
 function showConfetti() {
@@ -85,6 +86,7 @@ function showConfetti() {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.bottom = '0';
         confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
         container.appendChild(confetti);
 
@@ -101,8 +103,8 @@ function removeResult() {
         document.getElementById('resultText').innerText = '';
         document.getElementById('resultDisplay').style.display = 'none';
         showNotification('Resultado removido!', 'success');
-        updateRoulette();
-        document.getElementById('removeResultBtn').style.display = 'none'; // Esconde o botão após remover
+        updateWheel();
+        document.getElementById('removeResultBtn').style.display = 'none';
     } else {
         showNotification('Nenhum resultado para remover.', 'error');
     }

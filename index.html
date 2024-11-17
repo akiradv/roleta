@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roleta de Mensagens</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Winwheel.js/2.7.0/Winwheel.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -12,9 +13,7 @@
         <input type="text" id="messageInput" placeholder="Digite sua mensagem">
         <button onclick="addMessage()">Adicionar Mensagem</button>
         <button onclick="spin()">Girar Roleta</button>
-        <div id="roulette">
-            <div id="rouletteResult"></div>
-        </div>
+        <canvas id="canvas" width="500" height="500"></canvas>
         <div id="resultDisplay" style="display: none;">Resultado: <span id="resultText"></span></div>
         <button id="removeResultBtn" onclick="removeResult()" style="display: none;">Remover Resultado</button>
     </div>
